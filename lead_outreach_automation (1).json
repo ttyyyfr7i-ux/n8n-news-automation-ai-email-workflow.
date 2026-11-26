@@ -1,0 +1,1153 @@
+{
+  "name": "Lead Outreach Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "c5eed39e-b20c-42c7-9b41-735c61c6dd2d",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "de4b338f-f831-4718-b457-b96f3db0b5a7"
+    },
+    {
+      "parameters": {},
+      "id": "e7278048-7c8c-46e8-ab7f-be0b34338a84",
+      "name": "Manual Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "id": "39350d74-b73a-40bc-a6db-69c2f45b963b",
+      "name": "Daily Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": true,
+        "filters": {
+          "labelIds": [
+            "INBOX"
+          ]
+        },
+        "options": {}
+      },
+      "id": "bf2b9b94-c768-4b3f-a159-896686a59994",
+      "name": "Gmail Reply Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "formTitle": "Add Lead",
+        "formDescription": "Add a lead to the outreach sheet",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e6e37462-e9d7-42dc-bf9f-b34ed0cf70a0",
+      "name": "Add Lead Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        640
+      ],
+      "webhookId": "184ceaa7-2e9f-4cea-81ac-5130ecb19944"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "27b217a1-71f3-4a90-8234-0d4d04dec301",
+              "name": "groq_api_key",
+              "value": "PASTE_GROQ_API_KEY",
+              "type": "string"
+            },
+            {
+              "id": "bcc1d18e-e612-4936-86ca-d2e3e1a126d2",
+              "name": "groq_chat_model",
+              "value": "groq/compound",
+              "type": "string"
+            },
+            {
+              "id": "074f71e6-eca4-45fa-b88b-fd11ae8cd198",
+              "name": "groq_email_model",
+              "value": "llama-3.3-70b-versatile",
+              "type": "string"
+            },
+            {
+              "id": "00c85b65-c11c-4825-96aa-c4c024c75c51",
+              "name": "apify_token",
+              "value": "PASTE_APIFY_TOKEN",
+              "type": "string"
+            },
+            {
+              "id": "5677a770-f6ca-4367-b8aa-3806edb875fb",
+              "name": "apify_actor",
+              "value": "compass~crawler-google-places",
+              "type": "string"
+            },
+            {
+              "id": "2eb2b54e-72a0-4d84-8029-894f677ab74c",
+              "name": "sheet_id",
+              "value": "PASTE_GOOGLE_SHEET_ID",
+              "type": "string"
+            },
+            {
+              "id": "97e7aebf-8346-4330-adcc-9e3ed2ed9ac1",
+              "name": "sheet_name",
+              "value": "Leads",
+              "type": "string"
+            },
+            {
+              "id": "e097d0ab-eef7-4999-a7e4-055b7e9847fa",
+              "name": "telegram_chat_id",
+              "value": "PASTE_TELEGRAM_CHAT_ID",
+              "type": "string"
+            },
+            {
+              "id": "70dfb6e0-a7cd-40c9-a1b1-57ca872d6f00",
+              "name": "default_query",
+              "value": "dentist",
+              "type": "string"
+            },
+            {
+              "id": "fbd3c773-180c-4ce6-b707-30ea5c6b71c8",
+              "name": "default_location",
+              "value": "Cairo, Egypt",
+              "type": "string"
+            },
+            {
+              "id": "a19190df-4821-4066-bdba-926e479e782a",
+              "name": "max_places",
+              "value": "30",
+              "type": "string"
+            },
+            {
+              "id": "7badf7b9-a49c-421a-95de-9fff21c9334e",
+              "name": "daily_limit",
+              "value": "20",
+              "type": "string"
+            },
+            {
+              "id": "1f0a275e-39d0-4fc6-95ec-b7c8e9580654",
+              "name": "wait_seconds",
+              "value": "90",
+              "type": "string"
+            },
+            {
+              "id": "83ab76f1-b820-466c-9e4f-398482e0b645",
+              "name": "sender_name",
+              "value": "Your Name",
+              "type": "string"
+            },
+            {
+              "id": "981e0afa-5b63-4288-b943-89da35528e90",
+              "name": "company",
+              "value": "Your Company",
+              "type": "string"
+            },
+            {
+              "id": "d96303f1-9171-4cea-ab4c-51e033d21012",
+              "name": "offer",
+              "value": "Describe what you offer here",
+              "type": "string"
+            },
+            {
+              "id": "d1a55b28-540e-4224-b1ad-c7da81b13da5",
+              "name": "email_language",
+              "value": "English",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "acf16288-fee6-4b5f-a29c-279ea7bc7f5f",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        280,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "35ca1f8c-7380-4fe8-ab8a-e7f21c87f67f",
+                    "leftValue": "={{ !!$json.message }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "telegram"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c9d191f9-b44d-4b65-bbe9-7f74c735934b",
+                    "leftValue": "={{ !!$json.threadId }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "gmail"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6c052c4c-a6a5-41c8-82c2-81e4c0ac519d",
+                    "leftValue": "={{ !!$json.Email }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "form"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "6e53e311-7cad-4ff1-adfb-d9df132c2644",
+      "name": "Route",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        540,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c6de5d5a-717a-4074-a917-06e942b02406",
+              "leftValue": "={{ String($json.message.chat.id) === String($json.telegram_chat_id) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "831e625f-6ef1-484e-81c7-ae18d7b79635",
+      "name": "Allowed Sender?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "={{ 'Your chat ID is ' + $json.message.chat.id + '. Paste it into Config > telegram_chat_id to unlock this bot.' }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "486fcd8f-4353-45ef-8f60-a16fab354583",
+      "name": "Reply Chat ID",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1060,
+        -140
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e5234252-d266-481d-8fa3-1f26ab7851cd",
+              "leftValue": "={{ ($json.message.text || '').trim().toLowerCase().startsWith('/leads') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4c5fc514-2112-48f5-aade-73a8ead9b6a6",
+      "name": "Is Lead Job?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1060,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Config').first().json.groq_api_key }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.groq_chat_model, temperature: 0.5, messages: [ { role: 'system', content: 'You are a helpful research assistant. Answer concisely in the same language as the user. Use web search when you need current information.' }, { role: 'user', content: $('Route').first().json.message.text } ] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "0f2a5740-ab81-4d23-8d8b-2998d7e5c4bb",
+      "name": "Chat AI (Groq)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        140
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.telegram_chat_id }}",
+        "text": "={{ String($json.choices[0].message.content).slice(0, 4000) }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "d72f44a0-f9fc-48bc-8e78-2c56441402c7",
+      "name": "Reply Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1580,
+        140
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nlet query = j.default_query, location = j.default_location;\nif (j.message && j.message.text) {\n  const t = j.message.text.replace(/^\\/leads/i, '').trim();\n  if (t) { const p = t.split('|').map(s => s.trim()); query = p[0] || query; location = p[1] || location; }\n}\nreturn [{ json: { query, location } }];"
+      },
+      "id": "2f9daac8-3d66-478c-8e07-16aeefc40f75",
+      "name": "Parse Lead Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.apify.com/v2/acts/{{ $('Config').first().json.apify_actor }}/run-sync-get-dataset-items?token={{ $('Config').first().json.apify_token }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ searchStringsArray: [$json.query], locationQuery: $json.location, maxCrawledPlacesPerSearch: Number($('Config').first().json.max_places), language: 'en', scrapeContacts: true }) }}",
+        "options": {
+          "timeout": 330000
+        }
+      },
+      "id": "3ad9e96f-2c81-417d-af5f-a8e4a2310a3a",
+      "name": "Apify Google Maps",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1580,
+        420
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.telegram_chat_id }}",
+        "text": "={{ 'Lead search failed. Check Apify token / credits.' }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "3730df78-e22a-4fa8-8f53-d7b69d0e7bb4",
+      "name": "Notify Search Failed",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1580,
+        600
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const seen = new Set(); const out = [];\nfor (const it of $input.all()) {\n  const p = it.json;\n  const emails = Array.isArray(p.emails) ? p.emails : (p.email ? [p.email] : []);\n  const email = String(emails.find(e => /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(String(e))) || '').toLowerCase();\n  if (!email || seen.has(email) || /\\.(png|jpe?g|gif|webp|svg)$/.test(email)) continue;\n  seen.add(email);\n  out.push({ json: { email, name: p.title || p.name || '', website: p.website || '', phone: p.phone || '', address: p.address || '', category: p.categoryName || '' } });\n}\nreturn out;"
+      },
+      "id": "17b3c9c2-d50f-4079-bd80-490dd22b7704",
+      "name": "Extract Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_name }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "e258a59d-0ac0-4899-a81b-b5b89ae70dc1",
+      "name": "Read Existing Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2100,
+        420
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const existing = new Set($input.all().map(i => String(i.json.email || '').toLowerCase()).filter(Boolean));\nconst limit = Number($('Config').first().json.daily_limit) || 20;\nconst leads = $('Extract Leads').all().map(i => i.json).filter(l => !existing.has(l.email)).slice(0, limit);\nreturn leads.map(l => ({ json: l }));"
+      },
+      "id": "8be6dfe1-c7b6-4dc8-9e25-0de549c7d005",
+      "name": "Dedupe & Limit",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2360,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "c4ba7327-d6c8-472c-9543-1755cae35e3d",
+      "name": "Loop Over Leads",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2620,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Config').first().json.groq_api_key }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: $('Config').first().json.groq_email_model, temperature: 0.7, response_format: { type: 'json_object' }, messages: [ { role: 'system', content: 'You write short, friendly, personalized cold emails (max 90 words). No hype, no false claims, no links. Reply with JSON only: {\"subject\":\"...\",\"body\":\"...\"}. Do not add a signature.' }, { role: 'user', content: `Sender: ${$('Config').first().json.sender_name} from ${$('Config').first().json.company}. What we offer: ${$('Config').first().json.offer}. Recipient business: ${$json.name} (${$json.category}), website ${$json.website}, address ${$json.address}. Write the email in ${$('Config').first().json.email_language}.` } ] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "7f8d2190-cb19-4729-b8a5-f73addd996c6",
+      "name": "Write Email (Groq)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2880,
+        520
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "const c = $('Config').first().json;\nconst lead = $('Loop Over Leads').first().json;\nconst r = $input.first().json;\nlet subject = 'Quick question', body = '';\ntry { const m = JSON.parse(r.choices[0].message.content); subject = m.subject || subject; body = m.body || ''; } catch (e) {}\nif (!body) throw new Error('AI returned an empty email for ' + lead.email);\nbody += '\\n\\n' + c.sender_name + '\\n\\nP.S. If you would rather not hear from me, just reply \"unsubscribe\" and I will not contact you again.';\nreturn [{ json: { to: lead.email, subject, body, lead } }];"
+      },
+      "id": "eb7a32eb-7c42-4d46-9822-b5517bfbfde3",
+      "name": "Build Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3140,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "sendTo": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "c04d9462-13ee-4cb7-81a5-643da0df441b",
+      "name": "Send Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        3400,
+        520
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const e = $input.first().json;\nconst b = $('Build Email').first().json;\nconst failed = !!e.error;\nreturn [{ json: { email: b.to, name: b.lead.name, website: b.lead.website, phone: b.lead.phone, address: b.lead.address,\n  subject: b.subject, status: failed ? 'failed' : 'sent', sent_at: new Date().toISOString(), threadId: e.threadId || '',\n  error: failed ? JSON.stringify(e.error).slice(0, 200) : '' } }];"
+      },
+      "id": "70bf533b-7691-4a04-8b70-900880c4f30c",
+      "name": "Build Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3660,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_name }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "f08ac43d-5e9e-43d5-b8e6-1695d4183bf4",
+      "name": "Log to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3920,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "amount": "={{ Number($('Config').first().json.wait_seconds) }}",
+        "unit": "seconds"
+      },
+      "id": "a64eddb2-c219-4dc9-88dc-dc51d6c6dd04",
+      "name": "Wait Between Emails",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4180,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.telegram_chat_id }}",
+        "text": "={{ 'Outreach run finished. Emails processed: ' + $('Dedupe & Limit').all().length }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "4e0dbb62-45fd-4ad9-930e-25bb79f936e4",
+      "name": "Summary",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2880,
+        300
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nconst subject = j.Subject || j.subject || '';\nconst from = j.From || j.from || '';\nif (!/^re:/i.test(subject)) return [];\nreturn [{ json: { text: 'New reply from ' + from + '\\nSubject: ' + subject + '\\n\\n' + String(j.snippet || '').slice(0, 500) } }];"
+      },
+      "id": "a7cb0994-babb-4e27-be56-4bb29e2986fc",
+      "name": "Format Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.telegram_chat_id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "5af69283-03c3-4010-bcb9-3b953babe888",
+      "name": "Notify Reply",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1060,
+        480
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const j = $input.first().json;\nreturn [{ json: { email: String(j.Email).toLowerCase(), name: j.Name || '', website: '', phone: '', address: '', subject: '', status: 'manual_added', sent_at: '', threadId: '', error: '' } }];"
+      },
+      "id": "e0e5b49f-81b4-4fee-9857-72f7995fb237",
+      "name": "Prepare Form Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        800,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "sheet",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Config').first().json.sheet_name }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "a7b0eb62-ac8a-4262-8881-1d99cfb4450c",
+      "name": "Add Lead to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1060,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Config').first().json.telegram_chat_id }}",
+        "text": "={{ 'Lead added: ' + $json.email }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "231d1853-28f2-4ee2-b491-d688eb63b369",
+      "name": "Confirm Lead Added",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        640
+      ],
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Test": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Schedule": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Reply Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Lead Form": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Route",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route": {
+      "main": [
+        [
+          {
+            "node": "Allowed Sender?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Form Row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse Lead Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Allowed Sender?": {
+      "main": [
+        [
+          {
+            "node": "Is Lead Job?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Reply Chat ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Lead Job?": {
+      "main": [
+        [
+          {
+            "node": "Parse Lead Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Chat AI (Groq)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat AI (Groq)": {
+      "main": [
+        [
+          {
+            "node": "Reply Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify Google Maps": {
+      "main": [
+        [
+          {
+            "node": "Extract Leads",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Search Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Leads": {
+      "main": [
+        [
+          {
+            "node": "Read Existing Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Existing Leads": {
+      "main": [
+        [
+          {
+            "node": "Dedupe & Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dedupe & Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Lead Request": {
+      "main": [
+        [
+          {
+            "node": "Apify Google Maps",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Leads": {
+      "main": [
+        [
+          {
+            "node": "Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Write Email (Groq)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Email (Groq)": {
+      "main": [
+        [
+          {
+            "node": "Build Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Email": {
+      "main": [
+        [
+          {
+            "node": "Send Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Gmail": {
+      "main": [
+        [
+          {
+            "node": "Build Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Row": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait Between Emails",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait Between Emails": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Reply": {
+      "main": [
+        [
+          {
+            "node": "Notify Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Form Row": {
+      "main": [
+        [
+          {
+            "node": "Add Lead to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Lead to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Confirm Lead Added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": []
+}
